@@ -11,29 +11,76 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+The package extends functionality for [GetX](https://pub.dev/packages/get).
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* Short reference to controller
+* Unsubscribe a subscriptions automatically
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add dependency
+
+```yaml
+dependencies:
+  speed_up_get: latest
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+### Reference to a Controller
+
+Now you can reference to controller in the View(Widget) with short `c` reference
 
 ```dart
-const like = 'sample';
+Scaffold(
+  appBar: AppBar(
+    title: Text(c.title),
+  ),
+  body: Center(
+    child: Obx(
+      () => Text(
+        '${c.counter}',
+        style: Theme.of(context).textTheme.headline4,
+      ),
+    ),
+  ),
+  floatingActionButton: FloatingActionButton(
+    onPressed: c.incrementCounter,
+    tooltip: 'Increment',
+    child: const Icon(Icons.add),
+  ),
+);
 ```
 
-## Additional information
+### Subscribing
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+Subscribe in `onInit` of Services or Controllers and forget to unsubscribe in `onClose`
+
+```dart
+@override
+void onInit() {
+  subscribe(Stream.values([1, 2, 3]), onValue: (value) => print(value));
+}
+
+@override
+void onClose() {
+  // TODO: No need unsubscribe
+  super.onClose();
+}
+```
+
+Longer examples to `/example` folder.
+
+## Contributing
+
+We accept the following contributions:
+
+* Improving documentation
+* Reporting issues
+* Fixing bugs
+
+## Maintainers
+
+* [Andrew Piterov](mailto:piterov1990@gmail.com?subject=[GitHub]%20Source%20Dart%20fluent_result)

@@ -1,3 +1,4 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* [Add] GetView and GetWidget **extensions** to reference to controller as `c`
+* [Add] Add GetxSubscribing **mixin** to subscribe and automatically unsubscribe
