@@ -1,125 +1,129 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:speed_up_get/src/rx_decorator.dart';
 
 void main() {
   group('GetRxDecorator tests', () {
-    ///
-    test('GetRxDecorator: equality test', () async {
-      {
-        final v1 = 'a'.obsDeco();
-        final v2 = 'a'.obsDeco();
-        expect(v1, equals(v2));
-      }
-      {
-        final v1 = GetRxDecorator(const ['a', 'b']);
-        final v2 = GetRxDecorator(const ['a', 'b']);
-        expect(v1, equals(v2));
-      }
-      {
-        final v1 = GetRxDecorator(const {
-          1: ['a', 'b']
-        });
-        final v2 = GetRxDecorator(const {
-          1: ['a', 'b']
-        });
-        expect(v1, equals(v2));
-      }
-      {
-        final v1 = 'a'.obsDeco();
-        final v2 = 'b'.obsDeco();
-        expect(v1, isNot(equals(v2)));
-      }
-      {
-        final v1 = GetRxDecorator(const ['a', 'b']);
-        final v2 = GetRxDecorator(const ['a', 'c']);
-        expect(v1, isNot(equals(v2)));
-      }
-      {
-        final v1 = GetRxDecorator(const {
-          1: ['a', 'b']
-        });
-        final v2 = GetRxDecorator(const {
-          1: ['d', 'b']
-        });
-        expect(v1, isNot(equals(v2)));
-      }
-      {
-        final v1 = GetRxDecorator(const {
-          1: ['a', 'b']
-        });
-        final v2 = GetRxDecorator(const {
-          2: ['a', 'b']
-        });
-        expect(v1, isNot(equals(v2)));
-      }
+    test('GetRxDecorator: strings equality test', () async {
+      final v1 = 'a'.obsDeco();
+      final v2 = 'a'.obsDeco();
+      expect(v1, equals(v2));
+    });
+
+    test('GetRxDecorator: strings not equality test', () async {
+      final v1 = 'a'.obsDeco();
+      final v2 = 'b'.obsDeco();
+      expect(v1, isNot(equals(v2)));
+    });
+
+    test('GetRxDecorator: lists equality test', () async {
+      final v1 = GetRxDecorator(const ['a', 'b']);
+      final v2 = GetRxDecorator(const ['a', 'b']);
+      expect(v1, equals(v2));
+    });
+
+    test('GetRxDecorator: lists not equality test', () async {
+      final v1 = GetRxDecorator(const ['a', 'b']);
+      final v2 = GetRxDecorator(const ['a', 'c']);
+      expect(v1, isNot(equals(v2)));
+    });
+
+    test('GetRxDecorator: maps equality test', () async {
+      final v1 = GetRxDecorator(const {
+        1: ['a', 'b']
+      });
+      final v2 = GetRxDecorator(const {
+        1: ['a', 'b']
+      });
+      expect(v1, equals(v2));
+    });
+
+    test('GetRxDecorator: maps not equality test', () async {
+      final v1 = GetRxDecorator(const {
+        1: ['a', 'b']
+      });
+      final v2 = GetRxDecorator(const {
+        1: ['d', 'b']
+      });
+      expect(v1, isNot(equals(v2)));
+    });
+
+    test('GetRxDecorator: maps key not equality test', () async {
+      final v1 = GetRxDecorator(const {
+        1: ['a', 'b']
+      });
+      final v2 = GetRxDecorator(const {
+        2: ['a', 'b']
+      });
+      expect(v1, isNot(equals(v2)));
     });
 
     /// Here we just use auto setting.
     test('GetRxDecorator: with default setter test (No special business logic)',
-        () async {
-      var v = 'a'.obsDeco();
-      expectLater(v.stream, emitsInOrder(['b', 'c', 'cd']));
-      v.setValue(newValue: 'b');
-      v.setValue(newValue: 'c');
-      v += 'd';
-    });
+            () async {
+          var v = 'a'.obsDeco();
+          expectLater(v.stream, emitsInOrder(['b', 'c', 'cd']));
+          v('b');
+          v('c');
+          v += 'd';
+        });
 
     /// Here we can use special business logic inside custom setter.
     test(
         'GetRxDecorator: with custom setter test (with special business logic)',
-        () async {
-      var v = 'a'.obsDeco(
-          setter: (_, newValue, __) =>
+            () async {
+          var v = 'a'.obsDeco(
+              setter: (_, newValue, __) =>
               // We can return as `wrong` either [oldValue] or null.
               newValue?.contains('-') ?? false ? newValue : null);
-      expectLater(v.stream, emitsInOrder(['b-', '-c', '-c-']));
-      v.setValue(newValue: 'b-');
-      v.setValue(newValue: 'b');
-      v.setValue(newValue: 'c');
-      v.setValue(newValue: '-c');
-      v.setValue(newValue: 'd');
-      v += '-';
-    });
+          expectLater(v.stream, emitsInOrder(['b-', '-c', '-c-']));
+          v('b-');
+          v('b');
+          v('c');
+          v('-c');
+          v('d');
+          v += '-';
+        });
 
-    /// Here we does not use autoRefresh.
+    /// Here we does not use forceRefresh.
     test('GetRxDecorator: without refresh test', () async {
       final v = 'a'.obsDeco(
           setter: (_, newValue, __) =>
-              // We can return as `wrong` either [oldValue] or null.
-              newValue?.contains('-') ?? false ? newValue : null);
+          // We can return as `wrong` either [oldValue] or null.
+          newValue?.contains('-') ?? false ? newValue : null);
       expectLater(v.stream, emitsInOrder(['b-', '-c', 'd-d']));
-      v.setValue(newValue: 'b-');
-      v.setValue(newValue: 'b-');
-      v.setValue(newValue: 'b-');
-      v.setValue(newValue: 'b');
-      v.setValue(newValue: 'c');
-      v.setValue(newValue: 'c');
-      v.setValue(newValue: '-c');
-      v.setValue(newValue: '-c');
-      v.setValue(newValue: '-c');
-      v.setValue(newValue: 'd-d');
+      v('b-');
+      v('b-');
+      v('b-');
+      v('b');
+      v('c');
+      v('c');
+      v('-c');
+      v('-c');
+      v('-c');
+      v('d-d');
     });
 
-    /// Here we use autoRefresh.
+    /// Here we use forceRefresh.
     test('GetRxDecorator: with refresh test', () async {
       final v = 'a'.obsDeco(
-        forceUpdate: true,
+        forceRefresh: true,
         // We can return as `wrong` either [oldValue] or null.
         setter: (_, newValue, __) =>
-            newValue?.contains('-') ?? false ? newValue : null,
+        newValue?.contains('-') ?? false ? newValue : null,
       );
       expectLater(v.stream, emitsInOrder(['b-', 'b-', '-c', '-c', 'd-d']));
-      v.setValue(newValue: 'b-');
-      v.setValue(newValue: 'b-');
-      v.setValue(newValue: '-c');
-      v.setValue(newValue: '-c');
-      v.setValue(newValue: 'd-d');
+      v('b-');
+      v('b-');
+      v('-c');
+      v('-c');
+      v('d-d');
     });
 
     /// Here we use [args] as extra variable.
     test('GetRxDecorator: with args test', () async {
       final v = 'a'.obsDeco(
-        forceUpdate: true,
+        forceRefresh: true,
         setter: (_, newValue, args) {
           if (args is int && args < 2) {
             return null;
@@ -129,17 +133,17 @@ void main() {
         },
       );
       expectLater(v.stream, emitsInOrder(['b-2', '2-c', '3-d-d']));
-      v.setValue(newValue: 'b-1', args: 1);
-      v.setValue(newValue: 'b-2', args: 2);
-      v.setValue(newValue: '1-c', args: 1);
-      v.setValue(newValue: '2-c', args: 2);
-      v.setValue(newValue: '3-d-d', args: 3);
+      v('b-1', 1);
+      v('b-2', 2);
+      v('1-c', 1);
+      v('2-c', 2);
+      v('3-d-d', 3);
     });
 
     /// Here we use [args] as extra variable - variant 2.
     test('GetRxDecorator: with args-2 test', () async {
       final v = 'a'.obsDeco(
-        forceUpdate: true,
+        forceRefresh: true,
         setter: (oldValue, newValue, args) {
           if (args is bool) {
             return null;
@@ -150,11 +154,11 @@ void main() {
         },
       );
       expectLater(v.stream, emitsInOrder(['b-2', '2-c', '3-d-d']));
-      v.setValue(newValue: 'b-1', args: false);
-      v.setValue(newValue: 'b-2', args: 2);
-      v.setValue(newValue: '1-c', args: true);
-      v.setValue(newValue: '2-c', args: 2);
-      v.setValue(newValue: '3-d-d', args: 4.4);
+      v('b-1', false);
+      v('b-2', 2);
+      v('1-c', true);
+      v('2-c', 2);
+      v('3-d-d', 4.4);
     });
 
     /// Test using auto calculate without outer affect ([newValue] == null).
@@ -195,7 +199,7 @@ void main() {
           ]));
 
       // Just call [v.value()] without outer variables.
-      List.generate(19, (_) => v.setValue());
+      List.generate(19, (_) => v());
     });
 
     /// Here one can see overridden operation
@@ -217,5 +221,91 @@ void main() {
       v.toggle();
       v.toggle();
     });
+
+    /// Here one can see overridden operation
+    test('GetRxDecorator: decorate T test', () async {
+      var v = _Sample(10).obsDeco();
+      expectLater(v.stream, emitsInOrder([_Sample(20), _Sample(30)]));
+
+      v(_Sample(20));
+      v(_Sample(30));
+    });
   });
+
+  group('GetRxDecorator as Pattern tests', () {
+    ///
+    test('GetRxDecorator as Pattern: stream test', () async {
+      var rxVarInt = 1.obsDeco();
+
+      expectLater(rxVarInt.stream, emitsInOrder([2]));
+
+      rxVarInt(2);
+    });
+
+    ///
+    test('GetRxDecorator as Pattern: value test', () async {
+      var rxVarInt = 1.obsDeco();
+
+      expectLater(rxVarInt.stream, emitsInOrder([2, 3, 2, 10]));
+
+      expect(rxVarInt.value, equals(1));
+      expect(rxVarInt(), equals(1));
+
+      rxVarInt += 1;
+      expect(rxVarInt.value, equals(2));
+      expect(rxVarInt(), equals(2));
+
+      rxVarInt++;
+      expect(rxVarInt.value, equals(3));
+      expect(rxVarInt(), equals(3));
+
+      rxVarInt--;
+      expect(rxVarInt.value, equals(2));
+      expect(rxVarInt(), equals(2));
+
+      rxVarInt(10);
+      expect(rxVarInt.value, equals(10));
+      expect(rxVarInt(), equals(10));
+    });
+
+    ///
+    test('GetRxDecorator as Pattern: final value test', () async {
+      final rxVarInt = 1.obsDeco();
+
+      expectLater(rxVarInt.stream, emitsInOrder([2, 3, 2, 10]));
+
+      expectLater(rxVarInt.value, equals(1));
+      expectLater(rxVarInt(), equals(1));
+
+      rxVarInt.value += 1;
+      expect(rxVarInt.value, equals(2));
+      expect(rxVarInt(), equals(2));
+
+      rxVarInt.value++;
+      expectLater(rxVarInt.value, equals(3));
+      expectLater(rxVarInt(), equals(3));
+
+      rxVarInt.value--;
+      expectLater(rxVarInt.value, equals(2));
+      expectLater(rxVarInt(), equals(2));
+
+      rxVarInt.value = 10;
+      expectLater(rxVarInt.value, equals(10));
+      expectLater(rxVarInt(), equals(10));
+    });
+  });
+}
+
+class _Sample {
+  _Sample(this.i);
+
+  final int i;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is _Sample && runtimeType == other.runtimeType && i == other.i;
+
+  @override
+  int get hashCode => i.hashCode;
 }
