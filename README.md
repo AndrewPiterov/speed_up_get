@@ -119,11 +119,14 @@ Firstly, UDF with compact implementation. With UDF one controls data flow in str
 Second, one can pass optional arguments when try to change variable. 
 It can useful in some circumstances.
 
+```dart
+onPressed: () {
+  c.collatzDecor.withArgs(this);
+},
+```
+
 Third, callback take current value as argument and with this one can realize interesting use cases, 
 based on previous value rather on new one. Collatz conjecture is the good case.
-
-A lot of tests inside can be a good point to start.
-
 
 ```dart
     /// Test using auto calculate without outer affect ([newValue] == null).
@@ -168,6 +171,11 @@ A lot of tests inside can be a good point to start.
     });
 
 ```
+
+
+A lot of tests inside can be a good point to start.
+
+
 
 
 
