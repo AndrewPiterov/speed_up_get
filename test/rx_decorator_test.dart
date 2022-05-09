@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get/get.dart';
 import 'package:speed_up_get/src/rx_decorator.dart';
 
 void main() {
@@ -60,37 +59,37 @@ void main() {
 
     /// Here we just use auto setting.
     test('GetRxDecorator: with default setter test (No special business logic)',
-            () async {
-          var v = 'a'.obsDeco();
-          expectLater(v.stream, emitsInOrder(['b', 'c', 'cd']));
-          v('b');
-          v('c');
-          v += 'd';
-        });
+        () async {
+      var v = 'a'.obsDeco();
+      expectLater(v.stream, emitsInOrder(['b', 'c', 'cd']));
+      v('b');
+      v('c');
+      v += 'd';
+    });
 
     /// Here we can use special business logic inside custom setter.
     test(
         'GetRxDecorator: with custom setter test (with special business logic)',
-            () async {
-          var v = 'a'.obsDeco(
-              setter: (_, newValue, __) =>
+        () async {
+      var v = 'a'.obsDeco(
+          setter: (_, newValue, __) =>
               // We can return as `wrong` either [oldValue] or null.
               newValue?.contains('-') ?? false ? newValue : null);
-          expectLater(v.stream, emitsInOrder(['b-', '-c', '-c-']));
-          v('b-');
-          v('b');
-          v('c');
-          v('-c');
-          v('d');
-          v += '-';
-        });
+      expectLater(v.stream, emitsInOrder(['b-', '-c', '-c-']));
+      v('b-');
+      v('b');
+      v('c');
+      v('-c');
+      v('d');
+      v += '-';
+    });
 
     /// Here we does not use forceRefresh.
     test('GetRxDecorator: without refresh test', () async {
       final v = 'a'.obsDeco(
           setter: (_, newValue, __) =>
-          // We can return as `wrong` either [oldValue] or null.
-          newValue?.contains('-') ?? false ? newValue : null);
+              // We can return as `wrong` either [oldValue] or null.
+              newValue?.contains('-') ?? false ? newValue : null);
       expectLater(v.stream, emitsInOrder(['b-', '-c', 'd-d']));
       v('b-');
       v('b-');
@@ -110,7 +109,7 @@ void main() {
         forceRefresh: true,
         // We can return as `wrong` either [oldValue] or null.
         setter: (_, newValue, __) =>
-        newValue?.contains('-') ?? false ? newValue : null,
+            newValue?.contains('-') ?? false ? newValue : null,
       );
       expectLater(v.stream, emitsInOrder(['b-', 'b-', '-c', '-c', 'd-d']));
       v('b-');
@@ -304,7 +303,7 @@ class _Sample {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is _Sample && runtimeType == other.runtimeType && i == other.i;
+      other is _Sample && runtimeType == other.runtimeType && i == other.i;
 
   @override
   int get hashCode => i.hashCode;

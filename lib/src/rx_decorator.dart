@@ -182,7 +182,7 @@ class GetRxDecoratorInt extends GetRxDecorator<int> {
 ///
 extension IntGetRxDecoratorX on int {
   GetRxDecoratorInt obsDeco(
-      {bool? forceRefresh, GetRxDecoratorSetter<int>? setter}) =>
+          {bool? forceRefresh, GetRxDecoratorSetter<int>? setter}) =>
       GetRxDecoratorInt(this, forceRefresh: forceRefresh, setter: setter);
 }
 
@@ -208,7 +208,7 @@ class GetRxDecoratorDouble extends GetRxDecorator<double> {
 ///
 extension DoubleGetRxDecoratorX on double {
   GetRxDecoratorDouble obsDeco(
-      {bool? forceRefresh, GetRxDecoratorSetter<double>? setter}) =>
+          {bool? forceRefresh, GetRxDecoratorSetter<double>? setter}) =>
       GetRxDecoratorDouble(this, forceRefresh: forceRefresh, setter: setter);
 }
 
@@ -227,7 +227,7 @@ class GetRxDecoratorBool extends GetRxDecorator<bool> {
 ///
 extension BoolGetRxDecoratorX on bool {
   GetRxDecoratorBool obsDeco(
-      {bool? forceRefresh, GetRxDecoratorSetter<bool>? setter}) =>
+          {bool? forceRefresh, GetRxDecoratorSetter<bool>? setter}) =>
       GetRxDecoratorBool(this, forceRefresh: forceRefresh, setter: setter);
 }
 
@@ -262,13 +262,13 @@ class GetRxDecoratorString extends GetRxDecorator<String>
 ///
 extension StringGetRxDecoratorX on String {
   GetRxDecoratorString obsDeco(
-      {bool? forceRefresh, GetRxDecoratorSetter<String>? setter}) =>
+          {bool? forceRefresh, GetRxDecoratorSetter<String>? setter}) =>
       GetRxDecoratorString(this, forceRefresh: forceRefresh, setter: setter);
 }
 
 ///
 extension GetRxDecoratorX<T> on T {
   GetRxDecorator<T> obsDeco(
-      {bool? forceRefresh, GetRxDecoratorSetter<T>? setter}) =>
+          {bool? forceRefresh, GetRxDecoratorSetter<T>? setter}) =>
       GetRxDecorator<T>(this, forceRefresh: forceRefresh, setter: setter);
 }

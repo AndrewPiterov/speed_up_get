@@ -36,6 +36,7 @@ class TestController extends GetxController with GetxSubscribing {
 void main() {
   test('Subscribe in a controller', () async {
     const count = 5;
+    // ignore: unused_local_variable
     final controller = Get.put(TestController(count));
 
     // final items = <int>[];
