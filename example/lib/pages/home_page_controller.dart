@@ -1,4 +1,3 @@
-import 'package:example/pages/login_page.dart';
 import 'package:example/some_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -44,6 +43,7 @@ class HomePageController extends GetxController
   }
 
   @override
+  // ignore: unnecessary_overrides
   void onClose() {
     // No need unsubscribe
     super.onClose();
