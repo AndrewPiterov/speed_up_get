@@ -71,6 +71,8 @@ void onClose() {
 }
 ```
 
+Longer examples to `/example` folder.
+
 ### Decorator for Rx<T> (.obs) variables
 
 `GetRxDecorator` is useful where the Unidirectional Data Flow is need to be. 
@@ -175,11 +177,8 @@ based on previous value rather on new one. Collatz conjecture is the good case.
 
 A lot of tests inside can be a good point to start.
 
+Run example in `/example/lib/main_rx_decorator.dart` file.
 
-
-
-
-Longer examples to `/example` folder.
 
 ## Contributing
 
@@ -192,4 +191,5 @@ We accept the following contributions:
 ## Maintainers
 
 * [Andrew Piterov](mailto:piterov1990@gmail.com?subject=[GitHub]%20Source%20Dart%20fluent_result)
+* [Valery Kulikov](mailto:frostyland@gmail.com?subject=[GitHub]%20Source%20Dart%20speed_up_get)
 
