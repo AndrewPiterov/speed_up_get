@@ -17,6 +17,7 @@ The package extends functionality for [GetX](https://pub.dev/packages/get).
 
 * Short reference to controller
 * Unsubscribe a subscriptions automatically
+* Decorator for Rx-variables for manipulate them in UDF way  
 
 ## Getting started
 

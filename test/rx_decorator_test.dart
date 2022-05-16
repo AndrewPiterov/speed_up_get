@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:speed_up_get/src/rx_decorator.dart';
 
@@ -201,17 +202,132 @@ void main() {
       List.generate(19, (_) => v());
     });
 
-    /// Here one can see overridden operation
-    test('GetRxDecorator: decorate int test', () async {
-      var v = 0.obsDeco(setter: (_, newValue, __) {
-        return (newValue ?? 0) * 2;
+
+    group('GetRxDecorator<int>: test', (){
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: operator +() later test', () async {
+        var v = 0.obsDeco(setter: (_, newValue, __) {
+          return (newValue ?? 0) * 2;
+        });
+        expectLater(v.stream, emitsInOrder([20, 60, 160, 0]));
+        v += 10;
+        v += 10;
+        v += 20;
+        v -= 160;
       });
-      expectLater(v.stream, emitsInOrder([20, 60, 160, 0]));
-      v += 10;
-      v += 10;
-      v += 20;
-      v -= 160;
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: operator +() test', () async {
+        var v = 0.obsDeco(setter: (_, newValue, __) {
+          return (newValue ?? 0) < 0 ? 0 : newValue;
+        });
+        v += 10;
+        expect(v.value, equals(10));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: operator -() test', () async {
+        var v = 10.obsDeco(setter: (_, newValue, __) {
+          return (newValue ?? 0) < 0 ? 0 : newValue;
+        });
+        v -= 5;
+        expect(v.value, equals(5));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: abs for positive test', () async {
+        var v = 10.obsDeco();
+        expect(v.abs(), equals(10));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: abs for negative test', () async {
+        var v = (-10).obsDeco();
+        expect(v.abs(), equals(10));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: sign for negative test', () async {
+        var v = (-10).obsDeco();
+        expect(v.sign, equals(-1));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: sign for positive test', () async {
+        var v = 10.obsDeco();
+        expect(v.sign, equals(1));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: sign for zero test', () async {
+        var v = 0.obsDeco();
+        expect(v.sign, equals(0));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: Bit-wise AND operator test', () async {
+        expect(11.obsDeco() & 11, equals(11));
+        expect(10.obsDeco() & 11, equals(10));
+      });
+
+      test('GetRxDecorator<int>: Bit-wise OR operator test', () async {
+        expect(11.obsDeco() | 11, equals(11));
+        expect(10.obsDeco() | 11, equals(11));
+      });
+
+      test('GetRxDecorator<int>: Bit-wise XOR operator test', () async {
+        expect(11.obsDeco() ^ 11, equals(0));
+        expect(10.obsDeco() ^ 11, equals(1));
+        expect(10.obsDeco() ^ 1, equals(11));
+      });
+
+      test('GetRxDecorator<int>: Bit-wise Negate operator test', () async {
+        expect(~11.obsDeco(), equals(-12));
+        expect(~(-12).obsDeco(), equals(11));
+        expect(~10.obsDeco(), equals(-11));
+        expect(~(-11).obsDeco(), equals(10));
+        expect(~1.obsDeco(), equals(-2));
+        expect(~(-2).obsDeco(), equals(1));
+      });
+
+      test('GetRxDecorator<int>: << operator test', () async {
+        expect(1.obsDeco() << 1, equals(2));
+        expect(1.obsDeco() << 2, equals(4));
+      });
+
+      test('GetRxDecorator<int>: >> operator test', () async {
+        expect(1.obsDeco() >> 1, equals(0));
+        expect(2.obsDeco() >> 1, equals(1));
+      });
+
+      test('GetRxDecorator<int>: modPow test', () async {
+        expect(3.obsDeco().modPow(2, 10), equals(9));
+      });
+
+      test('GetRxDecorator<int>: gcd test', () async {
+        expect(532.obsDeco().gcd(14), equals(14));
+        expect(14.obsDeco().gcd(532), equals(14));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: isEven test', () async {
+        expect(10.obsDeco().isEven, isTrue);
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: isOdd test', () async {
+        expect(10.obsDeco().isOdd, isFalse);
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: bitLength test', () async {
+        expect(3.obsDeco().bitLength, equals(2));
+        expect((-3).obsDeco().bitLength, equals(2));
+      });
+
     });
+
 
     /// Here one can see overridden operation
     test('GetRxDecorator: decorate bool test', () async {
