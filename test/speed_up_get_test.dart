@@ -34,6 +34,7 @@ class TestController extends GetxController with GetxSubscribing {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   test('Subscribe in a controller', () async {
     const count = 5;
     // ignore: unused_local_variable
