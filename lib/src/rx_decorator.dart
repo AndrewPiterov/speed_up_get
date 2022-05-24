@@ -381,26 +381,6 @@ extension GetRxDecoratorIntX on int {
 }
 
 
-
-///
-// class GetRxDecoratorDouble extends GetRxDecorator<double> {
-//   GetRxDecoratorDouble(double initial,
-//       {bool? forceRefresh, GetRxDecoratorSetter<double>? setter})
-//       : super(initial, forceRefresh: forceRefresh, setter: setter);
-//
-//   /// Addition operator.
-//   GetRxDecoratorDouble operator +(double add) {
-//     call(_src.value + add);
-//     return this;
-//   }
-//
-//   /// Subtraction operator.
-//   GetRxDecoratorDouble operator -(double sub) {
-//     call(_src.value - sub);
-//     return this;
-//   }
-// }
-
 extension DoubleGetRxDecoratorX on GetRxDecorator<double> {
   /// Addition operator.
   GetRxDecorator<double> operator +(num other) {
