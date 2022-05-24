@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:speed_up_get/src/rx_decorator.dart';
 
 void main() {
@@ -140,6 +141,27 @@ void main() {
       v('3-d-d', 3);
     });
 
+    ///
+    test('GetRxDecorator: withArgs(args) test', () async {
+      final v = 1.obsDeco(
+        setter: (oldValue, _, args) {
+          if (args is int) {
+            return null;
+          }
+          // We can return as `wrong` either [oldValue] or null.
+          return oldValue + 1;
+        },
+      );
+      expectLater(v.stream, emitsInOrder([2, 3]));
+      v.withArgs(1);
+      v.withArgs(true);
+      v.withArgs('1');
+      v.withArgs(2);
+
+      expect(v.string, equals('3'));
+      expect(v.toString(), equals('3'));
+    });
+
     /// Here we use [args] as extra variable - variant 2.
     test('GetRxDecorator: with args-2 test', () async {
       final v = 'a'.obsDeco(
@@ -202,9 +224,7 @@ void main() {
       List.generate(19, (_) => v());
     });
 
-
-    group('GetRxDecorator<int>: test', (){
-
+    group('GetRxDecorator<int>: test', () {
       /// Here one can see overridden operation
       test('GetRxDecorator<int>: operator +() later test', () async {
         var v = 0.obsDeco(setter: (_, newValue, __) {
@@ -326,15 +346,262 @@ void main() {
         expect((-3).obsDeco().bitLength, equals(2));
       });
 
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: toUnsigned test', () async {
+        expect((-1).obsDeco().toUnsigned(5), equals(31));
+        expect((3).obsDeco().toUnsigned(3.bitLength), equals(3));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: toSigned test', () async {
+        expect(16.obsDeco().toSigned(5), equals(-16));
+        expect(239.obsDeco().toSigned(5), equals(15));
+        expect(10.obsDeco().toSigned(10.bitLength + 1), equals(10));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: -() test', () async {
+        var i = 10.obsDeco();
+        expect(-i, equals(-10));
+        i = (-20).obsDeco();
+        expect(-i, equals(20));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: round() test', () async {
+        expect(10.obsDeco().round(), equals(10));
+        expect((-10).obsDeco().round(), equals(-10));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: floor() test', () async {
+        expect(10.obsDeco().floor(), equals(10));
+        expect((-10).obsDeco().floor(), equals(-10));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: ceil() test', () async {
+        expect(10.obsDeco().ceil(), equals(10));
+        expect((-10).obsDeco().ceil(), equals(-10));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: truncate() test', () async {
+        expect(10.obsDeco().truncate(), equals(10));
+        expect((-10).obsDeco().truncate(), equals(-10));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: roundToDouble() test', () async {
+        expect(10.obsDeco().roundToDouble(), equals(10.roundToDouble()));
+        expect((-10).obsDeco().roundToDouble(), equals(-10.roundToDouble()));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: floorToDouble() test', () async {
+        expect(10.obsDeco().floorToDouble(), equals(10.floorToDouble()));
+        expect((-10).obsDeco().floorToDouble(), equals(-10.floorToDouble()));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: ceilToDouble() test', () async {
+        expect(10.obsDeco().ceilToDouble(), equals(10.ceilToDouble()));
+        expect((-10).obsDeco().ceilToDouble(), equals(-10.ceilToDouble()));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<int>: truncateToDouble() test', () async {
+        expect(10.obsDeco().truncateToDouble(), equals(10.truncateToDouble()));
+        expect(
+            (-10).obsDeco().truncateToDouble(), equals(-10.truncateToDouble()));
+      });
     });
 
+    group('GetRxDecorator<bool>: test', () {
+      /// Here one can see overridden operation
+      test('GetRxDecorator: decorate bool test', () async {
+        var v = true.obsDeco();
+        expectLater(v.stream, emitsInOrder([false, true]));
+        v.toggle();
+        v.toggle();
+      });
 
-    /// Here one can see overridden operation
-    test('GetRxDecorator: decorate bool test', () async {
-      var v = true.obsDeco();
-      expectLater(v.stream, emitsInOrder([false, true]));
-      v.toggle();
-      v.toggle();
+      ///
+      test('GetRxDecorator: decorate bool test', () async {
+        var v = true.obsDeco();
+        expectLater(v.isTrue, isTrue);
+        expectLater(v.isFalse, isFalse);
+      });
+
+      test('GetRxDecorator: decorate bool test', () async {
+        var v = false.obsDeco();
+        expectLater(v.isFalse, isTrue);
+        expectLater(v.isTrue, isFalse);
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<bool>: Bit-wise AND operator test', () async {
+        expect(true.obsDeco() & true, isTrue);
+        expect(false.obsDeco() & true, isFalse);
+        expect(true.obsDeco() & false, isFalse);
+        expect(false.obsDeco() & false, isFalse);
+      });
+
+      test('GetRxDecorator<bool>: Bit-wise OR operator test', () async {
+        expect(true.obsDeco() | true, isTrue);
+        expect(false.obsDeco() | true, isTrue);
+        expect(true.obsDeco() | false, isTrue);
+        expect(false.obsDeco() | false, isFalse);
+      });
+
+      test('GetRxDecorator<bool>: Bit-wise XOR operator test', () async {
+        expect(true.obsDeco() ^ true, isFalse);
+        expect(false.obsDeco() ^ true, isTrue);
+        expect(true.obsDeco() ^ false, isTrue);
+        expect(false.obsDeco() ^ false, isFalse);
+      });
+    });
+
+    group('GetRxDecorator<String>: test', () {
+
+      test('GetRxDecorator<String>: allMatches() test', () async {
+        const s = 'laloraro';
+        const match = 'o';
+        expectLater(s.obsDeco().allMatches(match), equals(s.allMatches(match)));
+      });
+
+      test('GetRxDecorator<String>: matchAsPrefix() test', () async {
+        const s = 'laloraro';
+        const match = 'o';
+        expectLater(s.obsDeco().matchAsPrefix(match), equals(s.matchAsPrefix(match)));
+      });
+
+      test('GetRxDecorator<String>: compareTo() test', () async {
+        const s = 'laloraro';
+        const match = 'o';
+        expectLater(s.obsDeco().compareTo(match), equals(s.compareTo(match)));
+      });
+
+    });
+
+    group('GetRxDecorator<double>: test', () {
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: operator +() test', () async {
+        var v = 1.1.obsDeco();
+        v += 2.2;
+        expect(v().toPrecision(2), equals(3.3));
+      });
+
+      test('GetRxDecorator<double>: operator -() test', () async {
+        var v = 1.1.obsDeco();
+        v -= 2.2;
+        expect(v().toPrecision(2), equals(-1.1));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: operator *() test', () async {
+        var v = 1.1.obsDeco() * 3;
+        // final r = v() * 2;
+        expect(v.toPrecision(2), equals(3.3));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: operator %() test', () async {
+        var v = 3.3.obsDeco() % 2;
+        expect(v.toPrecision(2), equals(1.3));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: operator /() test', () async {
+        var v = 3.3.obsDeco() / 3;
+        expect(v.toPrecision(2), equals(1.1));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: operator ~() test', () async {
+        var v = 3.3.obsDeco() ~/ 3;
+        expect(v, equals(1));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: operator abs() test', () async {
+        var v = (-3.3).obsDeco().abs();
+        expect(v, equals(3.3));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: -() test', () async {
+        var i = 10.0.obsDeco();
+        expect(-i, equals(-10.0));
+        i = (-20.0).obsDeco();
+        expect(-i, equals(20.0));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: operator sign() test', () async {
+        expect((-3.3).obsDeco().sign, equals(-1));
+        expect(3.3.obsDeco().sign, equals(1));
+        expect(0.0.obsDeco().sign, equals(0));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: round() test', () async {
+        expect(10.7.obsDeco().round(), equals(11.0));
+        expect(10.3.obsDeco().round(), equals(10.0));
+        expect((-10.7).obsDeco().round(), equals(-11.0));
+        expect((-10.3).obsDeco().round(), equals(-10.0));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: floor() test', () async {
+        expect(10.7.obsDeco().floor(), equals(10.0));
+        expect(10.3.obsDeco().floor(), equals(10.0));
+        expect((-10.7).obsDeco().floor(), equals(-11.0));
+        expect((-10.3).obsDeco().floor(), equals(-11.0));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: ceil() test', () async {
+        expect(10.7.obsDeco().ceil(), equals(11.0));
+        expect(10.3.obsDeco().ceil(), equals(11.0));
+        expect((-10.7).obsDeco().ceil(), equals(-10.0));
+        expect((-10.3).obsDeco().ceil(), equals(-10.0));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: truncate() test', () async {
+        expect(10.7.obsDeco().truncate(), equals(10));
+        expect(10.3.obsDeco().truncate(), equals(10));
+        expect((-10.7).obsDeco().truncate(), equals(-10));
+        expect((-10.3).obsDeco().truncate(), equals(-10));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: roundToDouble() test', () async {
+        expect(10.0.obsDeco().roundToDouble(), equals(10.0.roundToDouble()));
+        expect(
+            (-10.0).obsDeco().roundToDouble(), equals(-10.0.roundToDouble()));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: floorToDouble() test', () async {
+        expect(10.0.obsDeco().floorToDouble(), equals(10.floorToDouble()));
+        expect((-10.0).obsDeco().floorToDouble(), equals(-10.floorToDouble()));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: ceilToDouble() test', () async {
+        expect(10.0.obsDeco().ceilToDouble(), equals(10.ceilToDouble()));
+        expect((-10.0).obsDeco().ceilToDouble(), equals(-10.ceilToDouble()));
+      });
+
+      /// Here one can see overridden operation
+      test('GetRxDecorator<double>: truncateToDouble() test', () async {
+        expect(
+            10.0.obsDeco().truncateToDouble(), equals(10.truncateToDouble()));
+        expect((-10.0).obsDeco().truncateToDouble(),
+            equals(-10.truncateToDouble()));
+      });
     });
 
     /// Here one can see overridden operation
@@ -408,6 +675,7 @@ void main() {
       expectLater(rxVarInt.value, equals(10));
       expectLater(rxVarInt(), equals(10));
     });
+
   });
 }
 

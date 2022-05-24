@@ -239,14 +239,6 @@ extension IntGetRxDecoratorX on GetRxDecorator<int> {
   /// positive.
   int modPow(int exponent, int modulus) => value.modPow(exponent, modulus);
 
-  /// Returns the modular multiplicative inverse of this integer
-  /// modulo [modulus].
-  ///
-  /// The [modulus] must be positive.
-  ///
-  /// It is an error if no modular inverse exists.
-  int modInverse(int modulus) => value.modInverse(modulus);
-
   /// Returns the greatest common divisor of this integer and [other].
   ///
   /// If either number is non-zero, the result is the numerically greatest
@@ -596,8 +588,3 @@ extension GetRxDecoratorX<T> on T {
       GetRxDecorator<T>(this, forceRefresh: forceRefresh, setter: setter);
 }
 
-extension RxNumExt<T extends num> on Rx<T> {
-  /// Multiplication operator.
-  num operator *(num other) => value * other;
-
-}
