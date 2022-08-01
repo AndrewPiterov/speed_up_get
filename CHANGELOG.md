@@ -1,3 +1,7 @@
+## 0.0.3
+
+* [Add] AppService for correct async initialization.
+
 ## 0.0.2
 
 * [Add] Add GetRxDecorator **class** to handy and effective use Rx<T> variables in UDF manner

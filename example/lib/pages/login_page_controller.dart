@@ -1,4 +1,4 @@
-import 'package:example/some_service.dart';
+import 'package:example/services/some_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:speed_up_get/speed_up_get.dart';

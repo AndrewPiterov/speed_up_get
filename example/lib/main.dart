@@ -1,13 +1,12 @@
-import 'package:example/some_service.dart';
+import 'package:example/services/services.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'app.dart';
 
-void main() {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Get.lazyPut<ISomeService>(() => SomeService());
+  await initService();
 
   runApp(const MyApp());
 }

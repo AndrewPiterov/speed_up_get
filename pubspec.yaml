@@ -1,6 +1,6 @@
 name: speed_up_get
 description: Package to speed up GetX.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/AndrewPiterov/speed_up_get
 
 environment:
@@ -11,7 +11,7 @@ dependencies:
   equatable: ^2.0.3
   flutter:
     sdk: flutter
-  get: ^4.6.1
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
