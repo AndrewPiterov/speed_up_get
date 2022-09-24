@@ -24,8 +24,8 @@ class ValueService extends AppService {
   }
 
   @override
-  Future init() async {
-    super.init();
+  Future initAsync([IAsyncInitServiceParams? params]) async {
+    super.initAsync();
     _val.value = m.max(3, val);
     log('[ValueService] [init] $val');
   }

@@ -73,6 +73,24 @@ void onClose() {
 
 Longer examples to `/example` folder.
 
+### IAsyncInitService
+
+#### Before
+
+```dart
+await Get.putAsync<ValueService>(() async {
+  final x = ValueService();
+  await x.init();
+  return x;
+});
+```
+
+#### After
+
+```dart
+await registerServiceAsync(ValueService());
+```
+
 ### Decorator for Rx<T> (.obs) variables
 
 `GetRxDecorator` is useful where the Unidirectional Data Flow is need to be. 

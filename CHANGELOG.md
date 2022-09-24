@@ -1,3 +1,7 @@
+## 0.0.4
+
+* [Add] IAsyncInitService<T>.
+
 ## 0.0.3
 
 * [Add] AppService for correct async initialization.
