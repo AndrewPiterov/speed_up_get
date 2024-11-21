@@ -50,7 +50,7 @@ class MyHomePage extends GetView<IHomePageController> {
             Obx(
               () => Text(
                 '${c.counter}',
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
           ],

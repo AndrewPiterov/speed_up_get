@@ -131,9 +131,9 @@ class MyHomePage extends StatelessWidget {
                   width: Get.width - 100,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.red, // background
-                      onPrimary: Colors.yellow, // foreground
-                    ),
+                        // primary: Colors.red, // background
+                        // onPrimary: Colors.yellow, // foreground
+                        ),
                     onPressed: () {
                       c.collatzDecor.withArgs(this);
                     },
@@ -207,7 +207,7 @@ class Logger extends StatelessWidget {
       return SizedBox(
         width: Get.width - 100,
         child: Card(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).primaryColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(

@@ -73,7 +73,7 @@ void onClose() {
 
 Longer examples to `/example` folder.
 
-### IAsyncInitService
+### AppService
 
 #### Before
 
@@ -112,6 +112,7 @@ Stream<int> get clickCounterStream => _clickCounter.stream;
 /// 5. Method to process
 int _process(int v) => v > 3 ? 0 : v;
 ```
+
 But it is some cumbersome.
 
 Here is where the GetRxDecorator make sense to use.

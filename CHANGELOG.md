@@ -1,14 +1,18 @@
+## 1.0.0
+
+* **[Breaking changes]** Remove `IAsyncInitService<T>` to use `AppService` instead.
+
 ## 0.0.4
 
-* [Add] IAsyncInitService<T>.
+* [Add] `IAsyncInitService<T>`.
 
 ## 0.0.3
 
-* [Add] AppService for correct async initialization.
+* [Add] `AppService` for correct async initialization.
 
 ## 0.0.2
 
-* [Add] Add GetRxDecorator **class** to handy and effective use Rx<T> variables in UDF manner
+* [Add] Add `GetRxDecorator` **class** to handy and effective use Rx<T> variables in UDF manner
 
 ## 0.0.1
 

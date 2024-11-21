@@ -1,10 +1,14 @@
-import 'dart:developer';
 import 'dart:math' as m;
 
 import 'package:get/get.dart';
 import 'package:speed_up_get/speed_up_get.dart';
 
-class ValueService extends AppService {
+class Params extends AppServiceParams {
+  @override
+  List<Object?> get props => [];
+}
+
+class ValueService extends AppService<Params> {
   final _val = 0.obs;
   int get val => _val.value;
 
@@ -12,7 +16,7 @@ class ValueService extends AppService {
   void onInit() {
     super.onInit();
     _val.value = m.max(1, val);
-    log('[ValueService] [onInit] $val');
+    d('[onInit] $val');
   }
 
   @override
@@ -20,13 +24,12 @@ class ValueService extends AppService {
     super.onReady();
     await Future.delayed(const Duration(seconds: 3));
     _val.value = m.max(2, val);
-    log('[ValueService] [onReady] $val');
+    d('[onReady] $val');
   }
 
   @override
-  Future initAsync([IAsyncInitServiceParams? params]) async {
-    super.initAsync();
+  Future<void> initAsyncWith(params) async {
     _val.value = m.max(3, val);
-    log('[ValueService] [init] $val');
+    d('[init] $val');
   }
 }

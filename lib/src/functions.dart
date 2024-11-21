@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'async_init_service.dart';
+import 'package:speed_up_get/src/app_service.dart';
 
 /// Registering services asynchronously (Sugar way)
-Future registerServiceAsync<T extends IAsyncInitService>(
+Future registerServiceAsync<T extends AppService>(
   T service, [
-  IAsyncInitServiceParams? params,
+  AppServiceParams? params,
 ]) async {
   return benchLog(
-    '==> ⚙️ [Service] async initialization (${service.runtimeType.toString()})',
+    '==> ⚙️ [registerServiceAsync] async initialization (${service.runtimeType.toString()})',
     () async {
-      await service.initAsync();
+      if (params != null) {
+        await service.initAsyncWith(params);
+      } else {
+        await service.initAsync();
+      }
       Get.put<T>(service);
     },
   );
