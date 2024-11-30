@@ -1,3 +1,7 @@
+## 2.0.0
+
+* **[Breaking changes]** add `IAppService<T extends AppServiceParams>`
+
 ## 1.0.0
 
 * **[Breaking changes]** Remove `IAsyncInitService<T>` to use `AppService` instead.

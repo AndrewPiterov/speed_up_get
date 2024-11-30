@@ -8,8 +8,13 @@ class Params extends AppServiceParams {
   List<Object?> get props => [];
 }
 
-class ValueService extends AppService<Params> {
+abstract class IValueService implements IAppService<Params> {
+  int get val;
+}
+
+class ValueService extends AppService<Params> implements IValueService {
   final _val = 0.obs;
+  @override
   int get val => _val.value;
 
   @override

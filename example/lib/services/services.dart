@@ -9,6 +9,6 @@ export 'value_service.dart';
 
 Future initService() async {
   Get.lazyPut<ISomeService>(() => SomeService());
-  await registerServiceAsync(ValueService());
+  await registerServiceAsync<IValueService>(ValueService());
   Get.put(AnotherService());
 }

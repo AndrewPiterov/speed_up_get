@@ -88,7 +88,7 @@ await Get.putAsync<ValueService>(() async {
 #### After
 
 ```dart
-await registerServiceAsync(ValueService());
+await registerServiceAsync<IValueService>(ValueService());
 ```
 
 ### Decorator for Rx<T> (.obs) variables

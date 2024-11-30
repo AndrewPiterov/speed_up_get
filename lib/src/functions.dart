@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:speed_up_get/src/app_service.dart';
 
 /// Registering services asynchronously (Sugar way)
-Future registerServiceAsync<T extends AppService>(
+Future registerServiceAsync<T extends IAppService>(
   T service, [
   AppServiceParams? params,
 ]) async {
